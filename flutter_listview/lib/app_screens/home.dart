@@ -1,7 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_listview/details.dart';
+import 'package:flutter_listview/models/numbers_model.dart';
+
+
 
 class Home extends StatelessWidget{
+
 
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -11,22 +15,37 @@ class Home extends StatelessWidget{
      body: _buildListView(context),
    );
 
+
+
+
   //Method to Build ListView
-  ListView _buildListView(BuildContext context) => ListView.builder(
-        itemCount: 10,
-        itemBuilder: (_,index){
-         return ListTile(
-           title: Text("The List Item is #$index"),
-           subtitle: Text("Hey, this is ListItem"),
-           leading: Icon(Icons.thumb_up),
-           trailing: Icon(Icons.arrow_forward),
-           onTap: (){
-             Navigator.push(context,
-                 MaterialPageRoute(builder: (context)=>
-                   DetailPage(index))
-             );
-           },
-         ) ;
+  ListView _buildListView(BuildContext context) {
+    List<numbers_model> list =  [];
+    list.add(new numbers_model(1, "Nagalakshmi", "GF123"));
+    list.add(new numbers_model(1, "Nagalakshmi", "GF123"));
+    list.add(new numbers_model(1, "Nagalakshmi", "GF123"));
+    list.add(new numbers_model(1, "Nagalakshmi", "GF123"));
+    list.add(new numbers_model(1, "Nagalakshmi", "GF123"));
+    return ListView.builder(
+        itemCount: list.length,
+        itemBuilder: (context, index) {
+          var listname = list[index];
+          return ListTile(
+            title: Text(listname.name),
+            subtitle: Text(listname.rollNumber),
+            onTap: () {
+              Navigator.push(context,
+                  MaterialPageRoute(builder: (context) =>
+                      DetailPage(index))
+              );
+            },
+          );
         }
     );
+  }
+
+
+
+
 }
+
