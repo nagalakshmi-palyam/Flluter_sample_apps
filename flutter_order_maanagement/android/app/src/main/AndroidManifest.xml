@@ -1,5 +1,6 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.lakshmi.flutter_order_maanagement">
+    <uses-permission android:name="android.permission.INTERNET"/>
    <application
         android:label="flutter_order_maanagement"
         android:icon="@mipmap/ic_launcher">

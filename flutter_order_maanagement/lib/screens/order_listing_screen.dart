@@ -1,6 +1,12 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/painting.dart';
+import 'package:flutter_order_maanagement/models/Orders.dart';
+import 'package:flutter_order_maanagement/networking/fetching.dart';
+import 'package:http/http.dart' as http;
+
 
 
 class order_listing_screen extends StatefulWidget {
@@ -15,10 +21,24 @@ class order_listing_screen extends StatefulWidget {
 /// This is the private State class that goes with MyStatefulWidget.
 class _MyStatefulWidgetState extends State<order_listing_screen> {
 
+  List<Order> _orderlist;
+  Orders _orders;
+  bool _loading;
+
+   @override
+   void initState(){
+    super.initState();
+    _loading = true;
+    fetching.getOrders().then((orderslist) {
+       _orderlist = orderslist;
+      _loading = false;
+    });
+   }
+
   @override
   Widget build(BuildContext context) => Scaffold(
     appBar: AppBar(
-      title: Text("Orders"),
+      title: Text(_loading ? 'Loadind....' : 'Orders'),
     ),
     body: _buildListView(context),
     floatingActionButton:Container(
@@ -45,6 +65,7 @@ class _MyStatefulWidgetState extends State<order_listing_screen> {
     return ListView.builder(
         itemCount: 8,
         itemBuilder: (context, index) {
+         // Order orders = _orderlist[index];
           return Container(
               width: MediaQuery.of(context).size.width,
               margin: EdgeInsets.all(1.0),
@@ -69,7 +90,7 @@ class _MyStatefulWidgetState extends State<order_listing_screen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: <Widget>[
-                            Text("Buyer",textDirection: TextDirection.ltr,style: TextStyle( color: Colors.black,),),
+                            Text('buyer',textDirection: TextDirection.ltr,style: TextStyle( color: Colors.black,),),
                             Text("Order Value",textDirection: TextDirection.ltr,style: TextStyle( color: Colors.black,),),
                             Text("Delivery Date",textDirection: TextDirection.ltr,style: TextStyle( color: Colors.black,),),
                           ],
